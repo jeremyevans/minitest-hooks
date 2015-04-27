@@ -7,7 +7,7 @@ significantly speed up testing for specs that share expensive database setup cod
 
 = Installation
 
-  gem install enum_csv
+  gem install minitest-hooks
 
 = Source Code
 

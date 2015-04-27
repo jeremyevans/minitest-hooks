@@ -2,7 +2,7 @@ require "rake"
 require "rake/clean"
 require 'rake/testtask'
 
-CLEAN.include ["enum_csv-*.gem", "rdoc", "coverage"]
+CLEAN.include ["minitest-hooks-*.gem", "rdoc", "coverage"]
 
 desc "Build minitest-hooks gem"
 task :package=>[:clean] do |p|
