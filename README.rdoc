@@ -1,0 +1,95 @@
+= minitest-hooks
+
+minitest-hooks adds around and before_all/after_all/around_all hooks for Minitest.
+This allows you do things like run each suite of specs inside a database transaction,
+running each spec inside its own savepoint inside that transaction, which can
+significantly speed up testing for specs that share expensive database setup code.
+
+= Installation
+
+  gem install enum_csv
+
+= Source Code
+
+Source code is available on GitHub at https://github.com/jeremyevans/minitest-hooks
+
+= Usage
+
+== Using the library
+
+=== For all specs
+
+  require 'minitest/hooks/default'
+
+=== For some specs
+
+First, you need to require the library.
+
+  require 'minitest/hooks'
+
+Or you can set the default for some specs to be <tt>Minitest::HooksSpec</tt>:
+
+  MiniTest::Spec.register_spec_type(/something/, Minitest::HooksSpec)
+
+Alternatively, you can include <tt>Minitest::Hooks</tt> in a specific spec class:
+
+  describe 'something' do
+    include Minitest::Hooks
+  end
+
+But if you do this, you need to make sure that any +around+ and +around_all+
+methods defined in the class itself call +yield+ instead of +super+.
+
+== before_all Hooks
+
+To run code before any specs in the suite are executed, pass +:all+ to +before+:
+
+  describe 'something' do
+    before(:all) do
+      DB[:table].insert(:column=>1)
+    end
+  end
+
+== after_all Hooks
+
+To run code after all specs in the suite are executed, pass +:all+ to +after+:
+
+  describe 'something' do
+    after(:all) do
+      DB[:table].delete
+    end
+  end
+
+== around Hooks
+
+To run code around each spec in a suite, define the +around+ method and have it
+call +super+:
+
+  describe 'something' do
+    def around
+      DB.transaction(:rollback=>:always, :savepoint=>true, :auto_savepoint=>true) do
+        super
+      end
+    end
+  end
+
+== around_all Hooks
+
+To run code around all specs in a suite, define the +around_all+ method and have
+it call +super+:
+
+  describe 'something' do
+    def around_all
+      DB.transaction(:rollback=>:always) do
+        super
+      end
+    end
+  end
+
+= License
+
+MIT
+
+= Author
+
+Jeremy Evans <code@jeremyevans.net>
