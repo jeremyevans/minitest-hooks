@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s|
   s.name = 'minitest-hooks'
-  s.version = '1.0.0'
+  s.version = '1.0.1'
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "CHANGELOG", "MIT-LICENSE"]
@@ -9,7 +9,7 @@ spec = Gem::Specification.new do |s|
   s.summary = "Around and before_all/after_all/around_all hooks for Minitest"
   s.author = "Jeremy Evans"
   s.email = "code@jeremyevans.net"
-  s.homepage = "http://github.com/jeremyevans/minitest_hooks"
+  s.homepage = "http://github.com/jeremyevans/minitest-hooks"
   s.files = %w(MIT-LICENSE CHANGELOG README.rdoc Rakefile) + Dir["{spec,lib}/**/*.rb"]
   s.description = <<END
 minitest-hooks adds around and before_all/after_all/around_all hooks for Minitest.
