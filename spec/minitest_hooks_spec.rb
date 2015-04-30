@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sequel'
+gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/hooks/default'
 require 'logger'

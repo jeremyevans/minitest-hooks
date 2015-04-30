@@ -13,9 +13,9 @@ significantly speed up testing for specs that share expensive database setup cod
 
 Source code is available on GitHub at https://github.com/jeremyevans/minitest-hooks
 
-= Usage
+= Usage 
 
-== Using the library
+== In Specs (Minitest::Spec)
 
 === For all specs
 
@@ -40,7 +40,7 @@ Alternatively, you can include <tt>Minitest::Hooks</tt> in a specific spec class
 But if you do this, you need to make sure that any +around+ and +around_all+
 methods defined in the class itself call +yield+ instead of +super+.
 
-== before_all Hooks
+=== before_all Hooks
 
 To run code before any specs in the suite are executed, pass +:all+ to +before+:
 
@@ -50,7 +50,7 @@ To run code before any specs in the suite are executed, pass +:all+ to +before+:
     end
   end
 
-== after_all Hooks
+=== after_all Hooks
 
 To run code after all specs in the suite are executed, pass +:all+ to +after+:
 
@@ -60,7 +60,7 @@ To run code after all specs in the suite are executed, pass +:all+ to +after+:
     end
   end
 
-== around Hooks
+=== around Hooks
 
 To run code around each spec in a suite, define the +around+ method and have it
 call +super+:
@@ -73,7 +73,7 @@ call +super+:
     end
   end
 
-== around_all Hooks
+=== around_all Hooks
 
 To run code around all specs in a suite, define the +around_all+ method and have
 it call +super+:
@@ -85,6 +85,35 @@ it call +super+:
       end
     end
   end
+
+=== In Tests (Minitest::Test)
+
+Create a subclass of <tt>Minitest::Test</tt> and include <tt>Minitest::Hooks</tt>,
+and have your test classes subclass from that subclass:
+
+  require 'minitest/hooks'
+  class MyTest < Minitest::Test
+    include Minitest::Hooks
+  end
+
+  class TestSuite1 < MyTest
+  end
+
+To define +before_all+ and +after_all+ hooks, just define the methods, don't use
+<tt>before(:all)</tt> or <tt>after(:all)</tt>, and be sure to call super.
+
+  class TestSuite1 < MyTest
+    def before_all
+      super
+      DB[:table].insert(:column=>1)
+    end
+    def after_all
+      DB[:table].delete
+      super
+    end
+  end
+
++around+ and +around_all+ are defined the same way they are defined in specs.
 
 = License
 
