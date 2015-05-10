@@ -1,6 +1,6 @@
 spec = Gem::Specification.new do |s|
   s.name = 'minitest-hooks'
-  s.version = '1.0.1'
+  s.version = '1.1.0'
   s.platform = Gem::Platform::RUBY
   s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "CHANGELOG", "MIT-LICENSE"]

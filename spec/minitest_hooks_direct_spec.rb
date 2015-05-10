@@ -2,12 +2,16 @@ require 'rubygems'
 require 'sequel'
 gem 'minitest'
 require 'minitest/autorun'
-require 'minitest/hooks/default'
+require 'minitest/hooks'
 require 'logger'
 
-DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
+NDB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
 
-describe 'Minitest::Hooks with transactions/savepoints' do
+MiniTest::Spec.register_spec_type(/no_default/, Minitest::Spec)
+
+describe 'Minitest::Hooks with transactions/savepoints no_default' do
+  include Minitest::Hooks
+
   before(:all) do
     @ds_ba = @ds_aa
     @ds_ba.count.must_equal 1 + @i
@@ -24,7 +28,7 @@ describe 'Minitest::Hooks with transactions/savepoints' do
   end
   around do |&block|
     @ds_aa.count.must_equal 1 + @i
-    DB.transaction(:rollback=>:always, :savepoint=>true, :auto_savepoint=>true) do
+    NDB.transaction(:rollback=>:always, :savepoint=>true, :auto_savepoint=>true) do
       @ds_ae = @ds_aa
       @ds_ae.insert(1)
       super(&block)
@@ -33,14 +37,14 @@ describe 'Minitest::Hooks with transactions/savepoints' do
   end
   around(:all) do |&block|
     @i ||= 0
-    DB.transaction(:rollback=>:always) do
-      DB.create_table(:a){Integer :a}
-      @ds_aa = DB[:a]
+    NDB.transaction(:rollback=>:always) do
+      NDB.create_table(:a){Integer :a}
+      @ds_aa = NDB[:a]
       @ds_aa.count.must_equal 0
       @ds_aa.insert(1)
       super(&block)
     end
-    DB.table_exists?(:a).must_equal false
+    NDB.table_exists?(:a).must_equal false
   end
 
   3.times do |i|
@@ -90,7 +94,7 @@ describe 'Minitest::Hooks with transactions/savepoints' do
         block.call
         @ds_aa.count.must_equal 2
       end
-      DB.table_exists?(:a).must_equal false
+      NDB.table_exists?(:a).must_equal false
     end
 
     3.times do |i|
@@ -110,3 +114,4 @@ describe 'Minitest::Hooks with transactions/savepoints' do
     end
   end
 end
+

@@ -9,7 +9,6 @@ module Minitest::Hooks
   def self.included(mod)
     super
     mod.instance_exec do
-      include(@hooks_module ||= Module.new)
       extend(Minitest::Hooks::ClassMethods)
     end
   end
@@ -74,10 +73,16 @@ module Minitest::Hooks::ClassMethods
     r
   end
 
+  # If type is :all, set the around_all hook, otherwise set the around hook.
+  def around(type=nil, &block)
+    meth = type == :all ? :around_all : :around
+    define_method(meth, &block)
+  end
+
   # If type is :all, set the before_all hook instead of the before hook.
   def before(type=nil, &block)
     if type == :all
-      (defined?(@hooks_module) ? @hooks_module : self).send(:define_method, :before_all) do
+     define_method(:before_all) do
         super()
         instance_exec(&block)
       end
@@ -90,7 +95,7 @@ module Minitest::Hooks::ClassMethods
   # If type is :all, set the after_all hook instead of the after hook.
   def after(type=nil, &block)
     if type == :all
-      (defined?(@hooks_module) ? @hooks_module : self).send(:define_method, :after_all) do
+     define_method(:after_all) do
         instance_exec(&block)
         super()
       end

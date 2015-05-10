@@ -1,6 +1,5 @@
 require "rake"
 require "rake/clean"
-require 'rake/testtask'
 
 CLEAN.include ["minitest-hooks-*.gem", "rdoc", "coverage"]
 
@@ -13,7 +12,7 @@ end
 
 desc "Run specs"
 task :spec do
-  sh %{#{FileUtils::RUBY} -I lib -r ./spec/minitest_hooks_spec.rb spec/minitest_hooks_test.rb}
+  sh %{#{FileUtils::RUBY} -I lib -e 'ARGV.each{|f| require f}' ./spec/*.rb}
 end
 
 task :default=>:spec

@@ -1,3 +1,13 @@
+=== 1.1.0 (2015-05-11)
+
+* Remove unnecessary module inclusion (jeremyevans)
+
+* Add block-based around and around(:all) support (jeremyevans)
+
+=== 1.0.1 (2015-04-26)
+
+* Fix homepage in gemspec (jeremyevans)
+
 === 1.0.0 (2015-04-26)
 
 * Initial Public Release

@@ -27,7 +27,7 @@ First, you need to require the library.
 
   require 'minitest/hooks'
 
-Or you can set the default for some specs to be <tt>Minitest::HooksSpec</tt>:
+You can set the default for some specs to be <tt>Minitest::HooksSpec</tt>:
 
   MiniTest::Spec.register_spec_type(/something/, Minitest::HooksSpec)
 
@@ -36,9 +36,6 @@ Alternatively, you can include <tt>Minitest::Hooks</tt> in a specific spec class
   describe 'something' do
     include Minitest::Hooks
   end
-
-But if you do this, you need to make sure that any +around+ and +around_all+
-methods defined in the class itself call +yield+ instead of +super+.
 
 === before_all Hooks
 
@@ -62,26 +59,26 @@ To run code after all specs in the suite are executed, pass +:all+ to +after+:
 
 === around Hooks
 
-To run code around each spec in a suite, define the +around+ method and have it
+To run code around each spec in a suite, call +around+ with a block, and have the block
 call +super+:
 
   describe 'something' do
-    def around
+    around do |&block|
       DB.transaction(:rollback=>:always, :savepoint=>true, :auto_savepoint=>true) do
-        super
+        super(&block)
       end
     end
   end
 
 === around_all Hooks
 
-To run code around all specs in a suite, define the +around_all+ method and have
-it call +super+:
+To run code around all specs in a suite, call <tt>around(:all)</tt> with a block,
+and have the block call +super+:
 
   describe 'something' do
-    def around_all
+    around(:all) do |&block|
       DB.transaction(:rollback=>:always) do
-        super
+        super(&block)
       end
     end
   end
@@ -99,21 +96,32 @@ and have your test classes subclass from that subclass:
   class TestSuite1 < MyTest
   end
 
-To define +before_all+ and +after_all+ hooks, just define the methods, don't use
-<tt>before(:all)</tt> or <tt>after(:all)</tt>, and be sure to call super.
+You can just define the +before_all+, +after_all+, +around+, and +around_all+ methods,
+instead of using the spec DSL.  Make sure to call super when overriding the methods.
 
   class TestSuite1 < MyTest
     def before_all
       super
       DB[:table].insert(:column=>1)
     end
+
     def after_all
       DB[:table].delete
       super
     end
-  end
 
-+around+ and +around_all+ are defined the same way they are defined in specs.
+    def around
+      DB.transaction(:rollback=>:always, :savepoint=>true, :auto_savepoint=>true) do
+        super
+      end
+    end
+
+    def around_all
+      DB.transaction(:rollback=>:always) do
+        super
+      end
+    end
+  end
 
 = License
 
