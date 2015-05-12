@@ -1,6 +1,5 @@
-require 'rubygems'
+require 'bundler/setup'
 require 'sequel'
-gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/hooks'
 require 'logger'
@@ -115,3 +114,37 @@ describe 'Minitest::Hooks with transactions/savepoints no_default' do
   end
 end
 
+$var = []
+
+describe 'Outer' do
+  include Minitest::Hooks
+  before do
+    $var << :before
+  end
+  after do
+    $var << :after
+    $var.must_equal [:before, :begin, :ibefore, :ibegin, :during, :iend, :iafter, :end, :after]
+  end
+  around do |&test|
+    $var << :begin
+    super(&test)
+    $var << :end
+  end
+
+  describe 'Inner' do
+    before do
+      $var << :ibefore
+    end
+    after do
+      $var << :iafter
+    end
+    around do |&test|
+      $var << :ibegin
+      super(&test)
+      $var << :iend
+    end
+    it 'testing' do
+      $var << :during
+    end
+  end
+end
