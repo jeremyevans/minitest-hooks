@@ -43,3 +43,6 @@ rdoc_task_class.new do |rdoc|
   rdoc.rdoc_files.add %w"README.rdoc CHANGELOG MIT-LICENSE lib/**/*.rb"
 end
 
+# Features
+require 'cucumber/rake/task'
+Cucumber::Rake::Task.new(:features)

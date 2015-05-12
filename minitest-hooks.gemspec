@@ -21,4 +21,5 @@ END
   s.add_development_dependency "minitest", '>5'
   s.add_development_dependency "sequel", '>4'
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "cucumber"
 end
