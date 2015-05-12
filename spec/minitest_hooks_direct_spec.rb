@@ -148,3 +148,19 @@ describe 'Outer' do
     end
   end
 end
+
+$order = []
+describe "all the order" do
+  before :all do
+    $order << :before_all
+  end
+
+  it "x" do
+  end
+
+  describe "fooo" do
+    it "bar" do
+      $order.must_equal [:before_all]
+    end
+  end
+end
