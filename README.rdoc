@@ -123,6 +123,70 @@ instead of using the spec DSL.  Make sure to call super when overriding the meth
     end
   end
 
+= Behavior
+
+== Hooks Just Define Methods
+
+Just like the before/after hooks supported by minitest, all hooks supported by minitest-hooks
+just define methods on the spec class, there is no magic ("It's just ruby").  This has a
+couple of effects:
+
+1. You cannot define multiple hooks of the same type in the same class.  This is because
+   you cannot have multiple methods with the same name in the same class.  If you define
+   a second hook of the same type in the same class, it will overwrite the previous hook,
+   just like ruby's behavior if you define a method twice in the same class.
+
+2. For around and around(:all) hooks, you should always call super.  If you want a subclass
+   around hook to run inside a superclass around hook, you need to call super in the
+   subclass hook and run the code inside the block you pass to super, then call block.call
+   somewhere inside the super block:
+
+     describe "superclass" do
+       around do |&block|
+         some_outer_method do
+           super(&block)
+         end
+       end
+
+       describe "subclass" do
+         around do |&block|
+           super do
+             some_inner_method do
+               block.call
+             end
+           end
+         end
+       end
+     end
+
+   You do not need to call super for before(:all) or after(:all) hooks. Both before(:all) and
+   after(:all) implicitly call super for you in the method they define, mirroring minitest's
+   behavior for before and after hooks.
+
+3. All hooks share state/instance variables.  So any instance variables you set in before(:all),
+   around(:all), or around are shared with the examples.  Note that after(:all) will only see
+   instance variables set in before(:all) or around(:all), it will not see instance variables
+   set inside examples.
+
+== All Spec Classes are Independent
+
+The way minitest works, all spec classes are indepedent of other spec classes in terms
+of how and when they are executed, even spec classes that are subclasses of other spec
+classes.  This means that for every spec class, the before(:all), after(:all), and
+around(:all) hooks for that class will be executed, even if they were defined in the
+spec's superclass and not in the spec class itself.
+
+So if you have a spec superclass that uses before(:all), and a spec subclass for that
+superclass, the before(:all) in the spec superclass will be run twice, once in the context
+of an instance of the superclass, before executing the superclass's specs, and once in the
+context of an instance of the subclass, before executing the subclass's specs.
+
+== Order of Operations
+
+For each spec class, the around(:all) hooks are run first.  Both before(:all) and after(:all)
+run inside around(:all).  For each spec inside the spec the spec class, around will be called,
+and before and after for each spec will be run inside around.
+
 = License
 
 MIT
