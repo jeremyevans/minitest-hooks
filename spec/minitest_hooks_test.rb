@@ -1,10 +1,4 @@
-require 'rubygems'
-require 'sequel'
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/hooks'
-require 'logger'
-
+require File.expand_path("../helper", __FILE__)
 
 class MyTest < Minitest::Test
   include Minitest::Hooks

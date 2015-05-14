@@ -1,9 +1,4 @@
-require 'rubygems'
-require 'sequel'
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/hooks'
-require 'logger'
+require File.expand_path("../helper", __FILE__)
 
 NDB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
 
