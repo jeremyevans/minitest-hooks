@@ -106,3 +106,27 @@ describe 'Minitest::Hooks with transactions/savepoints' do
     end
   end
 end
+
+describe "multiple hooks" do
+  let(:list) { [] }
+  before(:module) { list << 1 }
+  before { list << 2 }
+  begin
+    before { list << 3 }
+  rescue RuntimeError
+  else
+    raise "That should not have worked"
+  end
+  after { list << 4 }
+  after(:module) { list.must_equal [1,2,4] }
+  begin
+    after { list << 6 }
+  rescue RuntimeError
+  else
+    raise "That should not have worked"
+  end
+
+  it "works" do
+    list.must_equal [1,2]
+  end
+end

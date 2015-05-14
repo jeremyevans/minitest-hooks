@@ -81,27 +81,35 @@ module Minitest::Hooks::ClassMethods
 
   # If type is :all, set the before_all hook instead of the before hook.
   def before(type=nil, &block)
-    if type == :all
+    case type
+    when :all
      define_method(:before_all) do
         super()
         instance_exec(&block)
       end
       nil
+    when :module
+      include Module.new { define_method(:setup) { super(); instance_exec(&block) } }
     else
-      super
+      raise "setup is already defined in this class" if instance_methods(false).include?(:setup)
+      super()
     end
   end
 
   # If type is :all, set the after_all hook instead of the after hook.
   def after(type=nil, &block)
-    if type == :all
+    case type
+    when :all
      define_method(:after_all) do
         instance_exec(&block)
         super()
       end
       nil
+    when :module
+      include Module.new { define_method(:teardown) { instance_exec(&block); super() } }
     else
-      super
+      raise "teardown is already defined in this class" if instance_methods(false).include?(:teardown)
+      super()
     end
   end
 end
