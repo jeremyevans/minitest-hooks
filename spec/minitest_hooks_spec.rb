@@ -1,9 +1,4 @@
-require 'rubygems'
-require 'sequel'
-gem 'minitest'
-require 'minitest/autorun'
-require 'minitest/hooks/default'
-require 'logger'
+require File.expand_path("../helper", __FILE__)
 
 DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
 

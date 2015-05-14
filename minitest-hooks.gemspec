@@ -1,4 +1,4 @@
-spec = Gem::Specification.new do |s|
+Gem::Specification.new do |s|
   s.name = 'minitest-hooks'
   s.version = '1.1.0'
   s.platform = Gem::Platform::RUBY
