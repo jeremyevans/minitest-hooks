@@ -1,10 +1,5 @@
-require 'rubygems'
-require 'sequel'
-gem 'minitest'
-require 'minitest/autorun'
+require './spec/helper'
 require 'minitest/hooks'
-require 'logger'
-
 
 class MyTest < Minitest::Test
   include Minitest::Hooks

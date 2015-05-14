@@ -1,9 +1,5 @@
-require 'rubygems'
-require 'sequel'
-gem 'minitest'
-require 'minitest/autorun'
+require './spec/helper'
 require 'minitest/hooks/default'
-require 'logger'
 
 DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
 
