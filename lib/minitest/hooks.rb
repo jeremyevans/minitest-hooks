@@ -1,5 +1,3 @@
-require 'minitest/spec'
-
 # Add support for around and before_all/after_all/around_all hooks to
 # minitest spec classes.
 module Minitest::Hooks
@@ -104,9 +102,4 @@ module Minitest::Hooks::ClassMethods
       super
     end
   end
-end
-
-# Spec subclass that includes the hook methods.
-class Minitest::HooksSpec < Minitest::Spec
-  include Minitest::Hooks
 end
