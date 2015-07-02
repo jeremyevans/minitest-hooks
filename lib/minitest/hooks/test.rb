@@ -67,7 +67,7 @@ module Minitest::Hooks::ClassMethods
 
     @instance.around_all do
       @instance.before_all
-      r = super
+      r = super(reporter, options)
       @instance.after_all
     end
     r
