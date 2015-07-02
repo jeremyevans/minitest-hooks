@@ -1,5 +1,5 @@
 require './spec/helper'
-require 'minitest/hooks'
+require 'minitest/hooks/test'
 
 class MyTest < Minitest::Test
   include Minitest::Hooks

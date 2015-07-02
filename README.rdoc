@@ -88,7 +88,7 @@ and have the block call +super+:
 Create a subclass of <tt>Minitest::Test</tt> and include <tt>Minitest::Hooks</tt>,
 and have your test classes subclass from that subclass:
 
-  require 'minitest/hooks'
+  require 'minitest/hooks/test'
   class MyTest < Minitest::Test
     include Minitest::Hooks
   end
