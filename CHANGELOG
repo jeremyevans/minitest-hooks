@@ -1,6 +1,6 @@
 === 1.2.0 (2015-07-02)
 
-* Add minitest/hooks/test file, which doesn't requrie minitest/spec (janko-m) (#9, #10)
+* Add minitest/hooks/test file, which doesn't require minitest/spec (janko-m) (#9, #10)
 
 === 1.1.0 (2015-05-11)
 
