@@ -63,14 +63,38 @@ module Minitest::Hooks::ClassMethods
   # dup of the singleton instance.
   def with_info_handler(reporter, &block)
     @instance = new(NEW)
+    inside = false
+   
+    begin
+      @instance.around_all do
+        inside = true
+        begin
+          @instance.capture_exceptions do
+            @instance.before_all
+          end
 
-    @instance.around_all do
-      begin
-        @instance.before_all
-        super(reporter, &block)
-      ensure
-        @instance.after_all
+          if @instance.failure
+            failed = true
+            reporter.record @instance
+          else
+            super(reporter, &block)
+          end
+        ensure
+          @instance.capture_exceptions do
+            @instance.after_all
+          end
+          if @instance.failure && !failed
+            failed = true
+            reporter.record @instance
+          end
+          inside = false
+        end
       end
+    rescue => e
+      @instance.capture_exceptions do
+        raise e
+      end
+      reporter.record @instance
     end
   end
 
