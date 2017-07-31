@@ -49,7 +49,7 @@ module Minitest::Hooks::ClassMethods
   # Unless name is NEW, return a dup singleton instance.
   def new(name)
     if name.equal?(NEW)
-      return super
+      return super(:around_all)
     end
 
     instance = @instance.dup
@@ -70,25 +70,26 @@ module Minitest::Hooks::ClassMethods
         inside = true
         begin
           @instance.capture_exceptions do
+            @instance.name = :before_all
             @instance.before_all
           end
 
           if @instance.failure
             failed = true
-            @instance.name = :before_all
             reporter.record @instance
           else
             super(reporter, &block)
           end
         ensure
           @instance.capture_exceptions do
+            @instance.name = :after_all
             @instance.after_all
           end
           if @instance.failure && !failed
             failed = true
-            @instance.name = :after_all
             reporter.record @instance
           end
+          @instance.name = :around_all
           inside = false
         end
       end
@@ -96,7 +97,6 @@ module Minitest::Hooks::ClassMethods
       @instance.capture_exceptions do
         raise e
       end
-      @instance.name = :around_all
       reporter.record @instance
     end
   end
