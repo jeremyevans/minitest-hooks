@@ -75,6 +75,7 @@ module Minitest::Hooks::ClassMethods
 
           if @instance.failure
             failed = true
+            @instance.name = :before_all
             reporter.record @instance
           else
             super(reporter, &block)
@@ -85,6 +86,7 @@ module Minitest::Hooks::ClassMethods
           end
           if @instance.failure && !failed
             failed = true
+            @instance.name = :after_all
             reporter.record @instance
           end
           inside = false
@@ -94,6 +96,7 @@ module Minitest::Hooks::ClassMethods
       @instance.capture_exceptions do
         raise e
       end
+      @instance.name = :around_all
       reporter.record @instance
     end
   end
