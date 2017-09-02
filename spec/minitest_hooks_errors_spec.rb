@@ -8,7 +8,7 @@ describe 'Minitest::Hooks error handling' do
   def self.run_test(desc, runs, errors)
     it "should handle errors in #{desc}" do
       ENV['MINITEST_HOOKS_ERRORS'] = desc
-      Open3.popen3(RUBY, "spec/errors/example.rb") do  |_, o, e, w|
+      Open3.popen3(RUBY, "spec/errors/example.rb", "-v") do  |_, o, e, w|
         o.read.must_match /#{runs} runs, 0 assertions, 0 failures, #{errors} errors, 0 skips/
         e.read.must_equal ''
         w.value.exitstatus.wont_equal 0 if w
