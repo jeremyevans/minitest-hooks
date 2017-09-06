@@ -1,3 +1,9 @@
+=== master
+
+* Set around_all test instance name to strings so that exceptions in {before,after,around}_all don't break reporters (#14)
+
+* Set time to 0 for around_all test instance so that exceptions in {before,after,around}_all don't break reporters (#13, #14)
+
 === 1.4.1 (2017-07-31)
 
 * Set test/spec name correctly when running before(:all)/after(:all)/around(:all) hooks (rcrogers, jeremyevans) (#12)
