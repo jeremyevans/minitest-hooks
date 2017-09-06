@@ -64,11 +64,9 @@ module Minitest::Hooks::ClassMethods
   def with_info_handler(reporter, &block)
     @instance = new(NEW)
     @instance.time = 0
-    inside = false
    
     begin
       @instance.around_all do
-        inside = true
         begin
           @instance.capture_exceptions do
             @instance.name = 'before_all'
@@ -91,7 +89,6 @@ module Minitest::Hooks::ClassMethods
             reporter.record @instance
           end
           @instance.name = 'around_all'
-          inside = false
         end
       end
     rescue => e
