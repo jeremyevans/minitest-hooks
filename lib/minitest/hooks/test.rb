@@ -90,7 +90,7 @@ module Minitest::Hooks::ClassMethods
             failed = true
             reporter.record @instance
           end
-          @instance.name = "#{description}#around_all"
+          @instance.name = "#{description}#around_all" unless failed
         end
       end
     rescue => e
