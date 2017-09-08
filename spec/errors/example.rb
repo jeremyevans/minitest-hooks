@@ -24,6 +24,14 @@ describe 'Minitest::Hooks error handling' do
   around(:all) do |&block|
     raise if error == 'around-all-before'
     super(&block)
+    case error
+    when 'before-all'
+      name.must_equal 'Minitest::Hooks error handling#before_all'
+    when 'after-all'
+      name.must_equal 'Minitest::Hooks error handling#after_all'
+    else
+      name.must_equal 'Minitest::Hooks error handling#around_all'
+    end
     raise if error == 'around-all-after'
   end
 
