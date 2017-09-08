@@ -83,7 +83,7 @@ module Minitest::Hooks::ClassMethods
           end
         ensure
           @instance.capture_exceptions do
-            @instance.name = "#{description}#after_all"
+            @instance.name = "#{description}#after_all" unless failed
             @instance.after_all
           end
           if @instance.failure && !failed
