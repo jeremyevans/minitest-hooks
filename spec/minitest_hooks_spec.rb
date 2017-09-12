@@ -1,7 +1,7 @@
 require './spec/helper'
 require 'minitest/hooks/default'
 
-DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
+DB = Sequel.connect(DATABASE_URL)
 
 describe 'Minitest::Hooks with transactions/savepoints' do
   before(:all) do

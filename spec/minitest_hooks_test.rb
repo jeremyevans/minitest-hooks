@@ -6,7 +6,7 @@ class MyTest < Minitest::Test
 end
 
 class TestMinitestHooks < MyTest
-  DB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
+  DB = Sequel.connect(DATABASE_URL)
 
   def before_all
     super

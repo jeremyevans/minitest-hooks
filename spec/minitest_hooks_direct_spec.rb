@@ -1,7 +1,7 @@
 require './spec/helper'
 require 'minitest/hooks'
 
-NDB = Sequel.connect(ENV['DATABASE_URL'] || 'sqlite:/')
+NDB = Sequel.connect(DATABASE_URL)
 
 MiniTest::Spec.register_spec_type(/no_default/, Minitest::Spec)
 
