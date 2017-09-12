@@ -1,8 +1,10 @@
-=== master
+=== 1.4.2 (2017-09-12)
 
-* Set around_all test instance name to strings so that exceptions in {before,after,around}_all don't break reporters (#14)
+* Don't modify test instance name if before_all/after_all cause an error (jeremyevans) (#14)
 
-* Set time to 0 for around_all test instance so that exceptions in {before,after,around}_all don't break reporters (#13, #14)
+* Set around_all test instance name to strings so that exceptions in {before,after,around}_all don't break reporters (jeremyevans) (#14)
+
+* Set time to 0 for around_all test instance so that exceptions in {before,after,around}_all don't break reporters (jeremyevans) (#13, #14)
 
 === 1.4.1 (2017-07-31)
 
