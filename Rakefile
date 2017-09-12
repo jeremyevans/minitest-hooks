@@ -12,9 +12,7 @@ end
 
 desc "Run specs"
 task :spec do
-  ENV['RUBY'] = FileUtils::RUBY
-  ENV['RUBYLIB'] = "lib:#{ENV['RUBYLIB']}"
-  sh %{#{FileUtils::RUBY} -I lib -e 'ARGV.each{|f| require f}' ./spec/*.rb}
+  sh %{#{FileUtils::RUBY} spec/all.rb}
 end
 
 task :default=>:spec
