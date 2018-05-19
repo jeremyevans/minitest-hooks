@@ -12,7 +12,16 @@ module Minitest
     def report
       results.each do |result|
         io.puts "result to_s: #{result.to_s.inspect}"
-        io.puts "result source_location: #{result.source_location.inspect}"
+        # For MiniTest 5.11+, we expect Minitest::Result objects.
+        if defined?(Minitest::Result)
+          io.puts "result source_location: #{result.source_location.inspect}"
+        else
+          # For older versions of Minitest, extract source_location in a
+          # similar fashion to how some third party reporters expected to be
+          # able to:
+          # https://github.com/circleci/minitest-ci/blob/8b72b0f32f154d91b53d63d1d0a8a8fb3b01d726/lib/minitest/ci_plugin.rb#L139
+          io.puts "result source_location: #{result.method(result.name).source_location.inspect}"
+        end
       end
     end
   end

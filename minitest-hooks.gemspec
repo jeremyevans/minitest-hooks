@@ -2,7 +2,6 @@ Gem::Specification.new do |s|
   s.name = 'minitest-hooks'
   s.version = '1.4.2'
   s.platform = Gem::Platform::RUBY
-  s.has_rdoc = true
   s.extra_rdoc_files = ["README.rdoc", "CHANGELOG", "MIT-LICENSE"]
   s.rdoc_options += ["--quiet", "--line-numbers", "--inline-source", '--title', 'minitest-hooks: around and before_all/after_all/around_all hooks for Minitest', '--main', 'README.rdoc']
   s.license = "MIT"
@@ -18,7 +17,8 @@ running each spec inside its own savepoint inside that transaction, which can
 significantly speed up testing for specs that share expensive database setup code.
 END
 
-  s.add_development_dependency "minitest", '>5'
+  s.add_dependency "minitest", ">5"
+  s.add_development_dependency "appraisal"
   s.add_development_dependency "sequel", '>4'
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rake"

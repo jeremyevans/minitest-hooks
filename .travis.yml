@@ -1,0 +1,19 @@
+sudo: false
+language: ruby
+rvm:
+  - 2.3
+  - 2.4
+  - 2.5
+before_install:
+  - gem install bundler
+gemfile:
+  - gemfiles/minitest_5.3.gemfile
+  - gemfiles/minitest_5.4.gemfile
+  - gemfiles/minitest_5.5.gemfile
+  - gemfiles/minitest_5.6.gemfile
+  - gemfiles/minitest_5.7.gemfile
+  - gemfiles/minitest_5.8.gemfile
+  - gemfiles/minitest_5.9.gemfile
+  - gemfiles/minitest_5.10.gemfile
+  - gemfiles/minitest_5.11.gemfile
+script: "bundle exec rake"
