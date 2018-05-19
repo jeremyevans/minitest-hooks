@@ -3,6 +3,23 @@ require 'minitest/hooks/default'
 
 error = ENV['MINITEST_HOOKS_ERRORS']
 
+module Minitest
+  def self.plugin_result_inspector_reporter_init(options)
+    self.reporter << ResultInspectorReporter.new(options[:io], options)
+  end
+
+  class ResultInspectorReporter < SummaryReporter
+    def report
+      results.each do |result|
+        io.puts "result to_s: #{result.to_s.inspect}"
+        io.puts "result source_location: #{result.source_location.inspect}"
+      end
+    end
+  end
+end
+
+Minitest.extensions << "result_inspector_reporter"
+
 describe 'Minitest::Hooks error handling' do
   before(:all) do
     raise if error == 'before-all'
@@ -26,11 +43,11 @@ describe 'Minitest::Hooks error handling' do
     super(&block)
     case error
     when 'before-all'
-      name.must_equal 'Minitest::Hooks error handling#before_all'
+      name.must_equal 'before_all'
     when 'after-all'
-      name.must_equal 'Minitest::Hooks error handling#after_all'
+      name.must_equal 'after_all'
     else
-      name.must_equal 'Minitest::Hooks error handling#around_all'
+      name.must_equal 'around_all'
     end
     raise if error == 'around-all-after'
   end

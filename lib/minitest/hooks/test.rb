@@ -64,40 +64,39 @@ module Minitest::Hooks::ClassMethods
   def with_info_handler(reporter, &block)
     @instance = new(NEW)
     @instance.time = 0
-    description = respond_to?(:desc) ? desc : name
-    @instance.name = "#{description}#around_all"
+    @instance.name = "around_all"
    
     begin
       @instance.around_all do
         begin
           @instance.capture_exceptions do
-            @instance.name = "#{description}#before_all"
+            @instance.name = "before_all"
             @instance.before_all
           end
 
           if @instance.failure
             failed = true
-            reporter.record @instance
+            reporter.record Minitest::Result.from(@instance)
           else
             super(reporter, &block)
           end
         ensure
           @instance.capture_exceptions do
-            @instance.name = "#{description}#after_all" unless failed
+            @instance.name = "after_all" unless failed
             @instance.after_all
           end
           if @instance.failure && !failed
             failed = true
-            reporter.record @instance
+            reporter.record Minitest::Result.from(@instance)
           end
-          @instance.name = "#{description}#around_all" unless failed
+          @instance.name = "around_all" unless failed
         end
       end
     rescue => e
       @instance.capture_exceptions do
         raise e
       end
-      reporter.record @instance
+      reporter.record Minitest::Result.from(@instance)
     end
   end
 
