@@ -4,11 +4,11 @@ source 'http://rubygems.org'
 
 minitest_version = case RUBY_VERSION
 when /\A1.8/
-  '< 5.4'
+  '< 5.12'
 when /\A1.9/
-  '< 5.6'
+  '< 5.4'
 when /\A2.0/
-  '< 5.7'
+  '< 5.6'
 when /\A2.1/
   '< 5.8'
 when /\A2.2/
