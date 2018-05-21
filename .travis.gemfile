@@ -1,0 +1,36 @@
+# This file is only used for TravisCI integration.
+
+source 'http://rubygems.org'
+
+minitest_version = case RUBY_VERSION
+when /\A1.8/
+  '< 5.1'
+when /\A1.9/
+  '< 5.3'
+when /\A2.0/
+  '< 5.5'
+when /\A2.1/
+  '< 5.7'
+when /\A2.2/
+  '< 5.9'
+when /\A2.3/
+  '< 5.10'
+when /\A2.4/
+  '< 5.11'
+else
+  '> 0'
+end
+
+if RUBY_VERSION < '1.9'
+  gem 'sequel', '< 5'
+else
+  gem 'sequel'
+end
+
+if RUBY_VERSION < '2'
+  gem 'rake', '<10.0.0'
+else
+  gem 'rake'
+end
+
+gem 'sqlite3'

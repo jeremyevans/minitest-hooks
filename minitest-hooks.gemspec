@@ -18,7 +18,6 @@ significantly speed up testing for specs that share expensive database setup cod
 END
 
   s.add_dependency "minitest", ">5"
-  s.add_development_dependency "appraisal"
   s.add_development_dependency "sequel", '>4'
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "rake"
