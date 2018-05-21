@@ -4,13 +4,13 @@ source 'http://rubygems.org'
 
 minitest_version = case RUBY_VERSION
 when /\A1.8/
-  '< 5.1'
+  '< 5.4'
 when /\A1.9/
-  '< 5.3'
+  '< 5.6'
 when /\A2.0/
-  '< 5.5'
-when /\A2.1/
   '< 5.7'
+when /\A2.1/
+  '< 5.8'
 when /\A2.2/
   '< 5.9'
 when /\A2.3/
@@ -34,4 +34,8 @@ else
   gem 'rake'
 end
 
-gem 'sqlite3'
+if defined?(JRUBY_VERSION)
+  gem 'jdbc-sqlite3'
+else
+  gem 'sqlite3'
+end
