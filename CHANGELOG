@@ -1,3 +1,7 @@
+=== 1.5.0 (2018-05-21)
+
+* Fix use with minitest 5.11+ by using Minitest::Result in such cases (GUI) (#15)
+
 === 1.4.2 (2017-09-12)
 
 * Don't modify test instance name if before_all/after_all cause an error (jeremyevans) (#14)
