@@ -76,7 +76,7 @@ module Minitest::Hooks::ClassMethods
 
           if @instance.failure
             failed = true
-            record_hook_error(reporter, @instance)
+            _record_minitest_hooks_error(reporter, @instance)
           else
             super(reporter, &block)
           end
@@ -87,7 +87,7 @@ module Minitest::Hooks::ClassMethods
           end
           if @instance.failure && !failed
             failed = true
-            record_hook_error(reporter, @instance)
+            _record_minitest_hooks_error(reporter, @instance)
           end
           @instance.name = "around_all" unless failed
         end
@@ -96,19 +96,8 @@ module Minitest::Hooks::ClassMethods
       @instance.capture_exceptions do
         raise e
       end
-      record_hook_error(reporter, @instance)
+      _record_minitest_hooks_error(reporter, @instance)
     end
-  end
-
-  def record_hook_error(reporter, instance)
-    # In MiniTest 5.11+, use Minitest::Result for wrapping the object to send
-    # to the reporter.
-    if(defined?(Minitest::Result))
-      result = Minitest::Result.from(instance)
-    else
-      result = instance
-    end
-    reporter.record result
   end
 
   # If type is :all, set the around_all hook, otherwise set the around hook.
@@ -141,5 +130,18 @@ module Minitest::Hooks::ClassMethods
     else
       super
     end
+  end
+
+  private
+
+  def _record_minitest_hooks_error(reporter, instance)
+    # In MiniTest 5.11+, use Minitest::Result for wrapping the object to send
+    # to the reporter.
+    if(defined?(Minitest::Result))
+      result = Minitest::Result.from(instance)
+    else
+      result = instance
+    end
+    reporter.record result
   end
 end
