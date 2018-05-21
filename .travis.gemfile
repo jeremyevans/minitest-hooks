@@ -20,6 +20,7 @@ when /\A2.4/
 else
   '> 0'
 end
+gem 'minitest', minitest_version
 
 if RUBY_VERSION < '1.9'
   gem 'sequel', '< 5'
