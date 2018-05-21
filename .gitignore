@@ -1,5 +1,4 @@
 /rdoc
 minitest-hooks-*.gem
 Gemfile.lock
-gemfiles/*.lock
 .bundle
