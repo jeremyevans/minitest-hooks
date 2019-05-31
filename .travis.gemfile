@@ -36,6 +36,8 @@ end
 
 if defined?(JRUBY_VERSION)
   gem 'jdbc-sqlite3'
+elsif RUBY_VERSION < '1.9.3'
+  gem 'sqlite3', '<1.4'
 else
   gem 'sqlite3'
 end
