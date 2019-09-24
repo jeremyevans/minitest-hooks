@@ -21,7 +21,7 @@ else
   '> 0'
 end
 gem 'minitest', minitest_version
-gem 'minitest-global_expectations'
+gem 'minitest-global_expectations', '>=1.0.1'
 
 if RUBY_VERSION < '1.9'
   gem 'sequel', '< 5'
