@@ -52,11 +52,11 @@ describe 'Minitest::Hooks error handling' do
     super(&block)
     case error
     when 'before-all'
-      name.must_equal 'before_all'
+      _(name).must_equal 'before_all'
     when 'after-all'
-      name.must_equal 'after_all'
+      _(name).must_equal 'after_all'
     else
-      name.must_equal 'around_all'
+      _(name).must_equal 'around_all'
     end
     raise if error == 'around-all-after'
   end

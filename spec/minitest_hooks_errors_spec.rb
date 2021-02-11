@@ -10,13 +10,13 @@ describe 'Minitest::Hooks error handling' do
       ENV['MINITEST_HOOKS_ERRORS'] = desc
       Open3.popen3(RUBY, "spec/errors/example.rb", "-v") do  |_, o, e, w|
         output = o.read
-        output.must_match /#{runs} runs, 0 assertions, 0 failures, #{errors} errors, 0 skips/
-        output.must_match /result to_s: ".*?Minitest::Hooks error handling#\w+.*?spec\/errors\/example\.rb:\d+/
-        output.must_match /result source_location: \["(unknown|.+?\.rb)", -?\d+\]/
+        _(output).must_match /#{runs} runs, \d+ assertions, 0 failures, #{errors} errors, 0 skips/
+        _(output).must_match /result to_s: ".*?Minitest::Hooks error handling#\w+.*?spec\/errors\/example\.rb:\d+/
+        _(output).must_match /result source_location: \["(unknown|.+?\.rb)", -?\d+\]/
         output = e.read
         output.gsub!(/Picked up _JAVA_OPTIONS: [^\n]+\n/, '')
-        output.must_equal ''
-        w.value.exitstatus.wont_equal 0 if w
+        _(output).must_equal ''
+        _(w.value.exitstatus).wont_equal 0 if w
       end
     end
   end
