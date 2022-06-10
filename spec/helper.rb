@@ -1,6 +1,11 @@
 $:.unshift(File.join(File.dirname(File.expand_path(__FILE__)), "../lib/"))
 require 'rubygems'
 require 'sequel'
+
+if ENV.delete('COVERAGE')
+  require_relative 'simplecov_helper'
+end
+
 ENV['MT_NO_PLUGINS'] = '1' # Work around stupid autoloading of plugins
 gem 'minitest'
 require 'minitest/global_expectations/autorun'

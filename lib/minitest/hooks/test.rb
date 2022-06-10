@@ -139,8 +139,10 @@ module Minitest::Hooks::ClassMethods
     # to the reporter.
     if(defined?(Minitest::Result))
       result = Minitest::Result.from(instance)
+    # :nocov:
     else
       result = instance
+    # :nocov:
     end
     reporter.record result
   end

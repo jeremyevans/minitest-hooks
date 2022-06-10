@@ -1,4 +1,5 @@
 /rdoc
-minitest-hooks-*.gem
-Gemfile.lock
-.bundle
+/minitest-hooks-*.gem
+/Gemfile.lock
+/.bundle
+/coverage

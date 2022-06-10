@@ -15,6 +15,12 @@ task :spec do
   sh %{#{FileUtils::RUBY} #{"-w" if RUBY_VERSION >= '3'} spec/all.rb}
 end
 
+desc "Run specs with coverage"
+task :spec_cov do
+  ENV['COVERAGE'] = '1'
+  sh %{#{FileUtils::RUBY} spec/all.rb}
+end
+
 task :default=>:spec
 
 ### RDoc
