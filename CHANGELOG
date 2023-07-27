@@ -1,5 +1,7 @@
 === 1.5.1 (2023-07-27)
 
+* Do not include specs or Rakefile in the gem (jeremyevans)
+
 * Fix use with minitest 5.19+ by using Minitest instead of MiniTest as the constant (jeremyevans)
 
 === 1.5.0 (2018-05-21)
