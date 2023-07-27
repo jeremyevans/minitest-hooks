@@ -135,7 +135,7 @@ module Minitest::Hooks::ClassMethods
   private
 
   def _record_minitest_hooks_error(reporter, instance)
-    # In MiniTest 5.11+, use Minitest::Result for wrapping the object to send
+    # In Minitest 5.11+, use Minitest::Result for wrapping the object to send
     # to the reporter.
     if(defined?(Minitest::Result))
       result = Minitest::Result.from(instance)

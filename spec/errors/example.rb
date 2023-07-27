@@ -12,7 +12,7 @@ module Minitest
     def report
       results.each do |result|
         io.puts "result to_s: #{result.to_s.inspect}"
-        # For MiniTest 5.11+, we expect Minitest::Result objects.
+        # For Minitest 5.11+, we expect Minitest::Result objects.
         if defined?(Minitest::Result)
           io.puts "result source_location: #{result.source_location.inspect}"
         else

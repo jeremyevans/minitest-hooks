@@ -3,7 +3,7 @@ require 'minitest/hooks'
 
 NDB = Sequel.connect(DATABASE_URL)
 
-MiniTest::Spec.register_spec_type(/no_default/, Minitest::Spec)
+Minitest::Spec.register_spec_type(/no_default/, Minitest::Spec)
 
 describe 'Minitest::Hooks with transactions/savepoints no_default' do
   include Minitest::Hooks

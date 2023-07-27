@@ -29,7 +29,7 @@ First, you need to require the library.
 
 You can set the default for some specs to be <tt>Minitest::HooksSpec</tt>:
 
-  MiniTest::Spec.register_spec_type(/something/, Minitest::HooksSpec)
+  Minitest::Spec.register_spec_type(/something/, Minitest::HooksSpec)
 
 Alternatively, you can include <tt>Minitest::Hooks</tt> in a specific spec class:
 
