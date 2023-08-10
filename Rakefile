@@ -28,7 +28,7 @@ task :default=>:spec
 RDOC_DEFAULT_OPTS = ["--quiet", "--line-numbers", "--inline-source", '--title', 'minitest-hooks: around and before_all/after_all/around_all hooks for Minitest']
 
 begin
-  gem 'hanna-nouveau'
+  gem 'hanna'
   RDOC_DEFAULT_OPTS.concat(['-f', 'hanna'])
 rescue Gem::LoadError
 end
