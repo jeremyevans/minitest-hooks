@@ -184,7 +184,7 @@ context of an instance of the subclass, before executing the subclass's specs.
 == Order of Operations
 
 For each spec class, the around(:all) hooks are run first.  Both before(:all) and after(:all)
-run inside around(:all).  For each spec inside the spec the spec class, around will be called,
+run inside around(:all).  For each spec inside the spec class, around will be called,
 and before and after for each spec will be run inside around.
 
 = License
