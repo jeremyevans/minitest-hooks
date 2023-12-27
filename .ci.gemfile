@@ -21,6 +21,11 @@ end
 gem 'minitest', minitest_version
 gem 'minitest-global_expectations', '>=1.0.1'
 
+if RUBY_VERSION >= '3.3'
+  # Until minitest is updated to not require mutex_m
+  gem 'mutex_m'
+end
+
 if RUBY_VERSION < '2.0'
   gem 'sequel', '< 5.70'
 else
