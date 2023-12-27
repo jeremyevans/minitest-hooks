@@ -1,24 +1,30 @@
 source 'http://rubygems.org'
 
-minitest_version = case RUBY_VERSION
-when /\A1.8/
-  '< 5.12'
-when /\A1.9/
-  '< 5.4'
-when /\A2.0/
-  '< 5.6'
-when /\A2.1/
-  '< 5.8'
-when /\A2.2/
-  '< 5.9'
-when /\A2.3/
-  '< 5.10'
-when /\A2.4/
-  '< 5.11'
+if RUBY_VERSION >= '3.3'
+  gem 'minitest', git: 'https://github.com/minitest/minitest'
 else
-  '> 0'
+  minitest_version = case RUBY_VERSION
+  when /\a1.8/
+    '< 5.12'
+  when /\A1.9/
+    '< 5.4'
+  when /\A2.0/
+    '< 5.6'
+  when /\A2.1/
+    '< 5.8'
+  when /\A2.2/
+    '< 5.9'
+  when /\A2.3/
+    '< 5.10'
+  when /\A2.4/
+    '< 5.11'
+  else
+    '> 0'
+  end
+
+  gem 'minitest', minitest_version
 end
-gem 'minitest', minitest_version
+
 gem 'minitest-global_expectations', '>=1.0.1'
 
 if RUBY_VERSION < '2.0'
