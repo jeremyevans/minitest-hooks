@@ -61,11 +61,13 @@ module Minitest::Hooks::ClassMethods
   # When running the specs in the class, first create a singleton instance, the singleton is
   # used to implement around_all/before_all/after_all hooks, and each spec will run as a
   # dup of the singleton instance.
-  def with_info_handler(reporter, &block)
+  def with_info_handler(*args, &block)
     @instance = new(NEW)
     @instance.time = 0
     @instance.name = "around_all"
-   
+
+    reporter, *_ = args
+
     begin
       @instance.around_all do
         begin
@@ -78,7 +80,7 @@ module Minitest::Hooks::ClassMethods
             failed = true
             _record_minitest_hooks_error(reporter, @instance)
           else
-            super(reporter, &block)
+            super
           end
         ensure
           @instance.capture_exceptions do
