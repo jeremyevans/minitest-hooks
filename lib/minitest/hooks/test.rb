@@ -66,7 +66,7 @@ module Minitest::Hooks::ClassMethods
     @instance.time = 0
     @instance.name = "around_all"
 
-    reporter, *_ = args
+    reporter = args[0]
 
     begin
       @instance.around_all do
