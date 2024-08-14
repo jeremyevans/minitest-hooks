@@ -1,3 +1,7 @@
+=== 1.5.2 (2024-08-14)
+
+* Fix use with minitest 5.25+ (paracycle) (#27, #28)
+
 === 1.5.1 (2023-07-27)
 
 * Do not include specs or Rakefile in the gem (jeremyevans)

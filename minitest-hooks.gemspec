@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = 'minitest-hooks'
-  s.version = '1.5.1'
+  s.version = '1.5.2'
   s.platform = Gem::Platform::RUBY
   s.extra_rdoc_files = ["README.rdoc", "CHANGELOG", "MIT-LICENSE"]
   s.rdoc_options += ["--quiet", "--line-numbers", "--inline-source", '--title', 'minitest-hooks: around and before_all/after_all/around_all hooks for Minitest', '--main', 'README.rdoc']
