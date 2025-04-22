@@ -12,7 +12,7 @@ describe 'Minitest::Hooks error handling' do
         output = o.read
         output.must_match(/#{runs} runs, 0 assertions, 0 failures, #{errors} errors, 0 skips/)
         output.must_match(/result to_s: ".*?Minitest::Hooks error handling#\w+.*?spec\/errors\/example\.rb:\d+/)
-        output.must_match(/result source_location: \["(unknown|.+?\.rb)", -?\d+\]/)
+        output.must_match(/result source_location: \["(unknown|.+?\.rb)", -?\d+/)
         output = e.read
         output.gsub!(/Picked up _JAVA_OPTIONS: [^\n]+\n/, '')
         output.must_equal ''
