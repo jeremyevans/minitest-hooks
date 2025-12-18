@@ -58,7 +58,9 @@ module Minitest::Hooks::ClassMethods
     instance
   end
 
+  # :nocov:
   if Minitest::VERSION >= '6'
+  # :nocov:
     def run_suite(reporter, options = {})
       @_minitest_hooks_reporter = reporter
       super
