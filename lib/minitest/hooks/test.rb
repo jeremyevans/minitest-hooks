@@ -58,6 +58,13 @@ module Minitest::Hooks::ClassMethods
     instance
   end
 
+  if Minitest::VERSION >= '6'
+    def run_suite(reporter, options = {})
+      @_minitest_hooks_reporter = reporter
+      super
+    end
+  end
+
   # When running the specs in the class, first create a singleton instance, the singleton is
   # used to implement around_all/before_all/after_all hooks, and each spec will run as a
   # dup of the singleton instance.
@@ -66,7 +73,7 @@ module Minitest::Hooks::ClassMethods
     @instance.time = 0
     @instance.name = "around_all"
 
-    reporter = args[0]
+    reporter = args[0] || @_minitest_hooks_reporter # Minitest 6+
 
     begin
       @instance.around_all do
