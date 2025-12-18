@@ -9,7 +9,14 @@ Gem::Specification.new do |s|
   s.author = "Jeremy Evans"
   s.email = "code@jeremyevans.net"
   s.homepage = "http://github.com/jeremyevans/minitest-hooks"
+  s.metadata = {
+    'bug_tracker_uri'   => 'https://github.com/jeremyevans/minitest-hooks/issues',
+    'changelog_uri'     => 'https://github.com/jeremyevans/minitest-hooks/blob/master/CHANGELOG',
+    'mailing_list_uri'  => 'https://github.com/jeremyevans/minitest-hooks/discussions',
+    'source_code_uri'   => 'https://github.com/jeremyevans/minitest-hooks',
+  }
   s.files = %w(MIT-LICENSE CHANGELOG README.rdoc) + Dir["lib/**/*.rb"]
+  s.required_ruby_version = ">= 1.8"
   s.description = <<END
 minitest-hooks adds around and before_all/after_all/around_all hooks for Minitest.
 This allows you do things like run each suite of specs inside a database transaction,
