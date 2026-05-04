@@ -10,7 +10,7 @@ describe 'Minitest::Hooks error handling' do
       ENV['MINITEST_HOOKS_ERRORS'] = desc
       Open3.popen3(RUBY, "spec/errors/example.rb", "-v") do  |_, o, e, w|
         output = o.read
-        asserts = (Minitest::VERSION >= '6' && desc == "around-all-after") ? 1 : 0
+        asserts = (desc == "around-all-after") ? 1 : 0
         output.must_match(/#{runs} runs, #{asserts} assertions, 0 failures, #{errors} errors, 0 skips/)
         output.must_match(/result to_s: ".*?Minitest::Hooks error handling#\w+.*?spec\/errors\/example\.rb:\d+/)
         output.must_match(/result source_location: \["(unknown|.+?\.rb)", -?\d+/)

@@ -49,10 +49,37 @@ module Minitest::Hooks::ClassMethods
   # Unless name is NEW, return a dup singleton instance.
   def new(name)
     if name.equal?(NEW)
-      return super('around_all')
+      instance = super('around_all')
+
+      # Attempt to handle assertion count issues. Assertions
+      # are incremented on this instance (created once per test class), but
+      # recorded on the instance created once per test method. This forwards
+      # the assertion increment to the most recently created instance.
+      def instance.assertions
+        if @instance
+          @instance.assertions
+        else
+          super
+        end
+      end
+
+      def instance.assertions=(v)
+        if @instance
+          @instance.assertions = v
+        else
+          super
+        end
+      end
+
+      return instance
     end
 
     instance = @instance.dup
+    # Reset the assertions for the shared instance after it is
+    # copied into the current instance, so that assertions during
+    # before_all are counted.
+    @instance.instance_variable_set(:@assertions, 0)
+    @instance.instance_variable_set(:@instance, instance)
     instance.name = name
     instance.failures = []
     instance
