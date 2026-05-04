@@ -83,7 +83,7 @@ describe 'Minitest::Hooks with transactions/savepoints' do
         @ds_aa.count.must_equal 1
         @ds_aa2 = @ds_aa
         @ds_aa2.insert(1)
-        block.call
+        block.call(nil)
         @ds_aa.count.must_equal 2
       end
       DB.table_exists?(:a).must_equal false
